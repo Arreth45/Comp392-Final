@@ -1,0 +1,28 @@
+{
+  "name": "comp392-Final Assignment",
+  "authors": [
+    "Jake Parnell <arreth45@gmail.com>"
+  ],
+  "description": "COMP392 Final Assignment for Advanced Graphics",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "https://github.com/Arreth45/COMP392-Lesson10",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Scripts/lib"
+  ],
+  "dependencies": {
+    "three.js": "threejs#*",
+    "stats.js": "*",
+    "Physijs": "physijs#*",
+    "EaselJS": "^0.8.2",
+    "TweenJS": "^0.6.2",
+    "SoundJS": "^0.6.2",
+    "PreloadJS": "^0.6.2"
+  }
+}
