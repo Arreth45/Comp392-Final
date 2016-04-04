@@ -69,12 +69,12 @@ module scenes {
             this._nameLabel.regX = this._nameLabel.getMeasuredWidth() * 0.5;
             this._nameLabel.regY = this._nameLabel.getMeasuredHeight() * 0.5;
             this._nameLabel.x = config.Screen.WIDTH * 0.5;
-            this._nameLabel.y = config.Screen.HEIGHT * 0.5;
+            this._nameLabel.y = config.Screen.HEIGHT * 0.3;
             this._stage.addChild(this._nameLabel);
 
             this._playButton = new createjs.Bitmap(assets.getResult("playButton"));
             this._playButton.regX = this._playButton.getBounds().width * 0.5;
-            this._playButton.regY = this._playButton.getBounds().height * 0.5;
+            this._playButton.regY = this._playButton.getBounds().height * 0.3;
             this._playButton.x = config.Screen.WIDTH * 0.5;
             this._playButton.y = config.Screen.HEIGHT * 0.5 + 200;
             this._stage.addChild(this._playButton);

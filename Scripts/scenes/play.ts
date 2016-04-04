@@ -200,7 +200,7 @@ module scenes {
             this.ground.receiveShadow = true;
             this.ground.name = "Ground";
             this.add(this.ground);
-            console.log("Added Burnt Ground to scene");
+            console.log("Added Ground to scene");
         }
 
         /**
@@ -238,9 +238,121 @@ module scenes {
             this.deathPlane.name = "DeathPlane";
             this.add(this.deathPlane);
         }
+        
+        //add maze and hazards to level
+        private addMaze(): void {
+            //Outer Walls
+            console.log("Start add maze");
+            this.wallGeometry = new BoxGeometry(32, 5, 1);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.backWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.backWall.position.set(0, 3, -16);
+            this.backWall.receiveShadow = true;
+            this.backWall.name = "wall";
+            scene.add(this.backWall);
 
+            this.wallGeometry = new BoxGeometry(32, 5, 1);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.frontWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.frontWall.position.set(0, 3, 16);
+            this.frontWall.receiveShadow = true;
+            this.frontWall.name = "wall";
+            this.add(this.frontWall);
 
+            this.wallGeometry = new BoxGeometry(1, 5, 32);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.rightWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.rightWall.position.set(16, 3, 0);
+            this.rightWall.receiveShadow = true;
+            this.rightWall.name = "wall";
+            this.add(this.rightWall);
 
+            this.wallGeometry = new BoxGeometry(1, 5, 32);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.leftWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.leftWall.position.set(-16, 3, 0);
+            this.leftWall.receiveShadow = true;
+            this.leftWall.name = "wall";
+            this.add(this.leftWall);
+
+            //Actual Maze
+            this.wallGeometry = new BoxGeometry(16, 5, 1);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+
+            this.wall1 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall1.position.set(8, 3, -12);
+            this.wall1.receiveShadow = true;
+            this.wall1.name = "wall";
+            this.add(this.wall1);
+
+            this.wall2 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall2.position.set(-8, 3, -8);
+            this.wall2.receiveShadow = true;
+            this.wall2.name = "wall";
+            this.add(this.wall2);
+
+            this.wall3 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall3.position.set(8, 3, -4);
+            this.wall3.receiveShadow = true;
+            this.wall3.name = "wall";
+            this.add(this.wall3);
+
+            this.wall4 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall4.position.set(-8, 3, 0);
+            this.wall4.receiveShadow = true;
+            this.wall4.name = "wall";
+            this.add(this.wall4);
+
+            this.wall5 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall5.position.set(8, 3, 4);
+            this.wall5.receiveShadow = true;
+            this.wall5.name = "wall";
+            this.add(this.wall5);
+
+            //"electric hazards"
+            this.hazardGeometry = new BoxGeometry(1, 2, 8);
+            this.hazardMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xffff00 }), 0, 0);
+
+            this.hazard1 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard1.position.set(0.5, 1, -12);
+            this.hazard1.receiveShadow = true;
+            this.hazard1.name = "hazard";
+            this.add(this.hazard1);
+
+            this.hazard2 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard2.position.set(0.5, 1, -8);
+            this.hazard2.receiveShadow = true;
+            this.hazard2.name = "hazard";
+            this.add(this.hazard2);
+
+            this.hazard3 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard3.position.set(0.5, 1, -4);
+            this.hazard3.receiveShadow = true;
+            this.hazard3.name = "hazard";
+            this.add(this.hazard3);
+
+            this.hazard4 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard4.position.set(0.5, 1, 0);
+            this.hazard4.receiveShadow = true;
+            this.hazard4.name = "hazard";
+            this.add(this.hazard4);
+
+            this.hazard5 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard5.position.set(0.5, 1, 4);
+            this.hazard5.receiveShadow = true;
+            this.hazard5.name = "hazard";
+            this.add(this.hazard4);
+
+            //End Goal
+            this.goalGeometry = new BoxGeometry(4, 1, 4);
+            this.goalMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff0000 }), 0, 0);
+            this.goal = new Physijs.BoxMesh(this.goalGeometry, this.goalMaterial, 0);
+            this.goal.position.set(15, 1, -15);
+            this.goal.name = "goal";
+            this.add(this.goal);
+
+        }
+        
         /**
          * Event Handler method for any pointerLockChange events
          * 
@@ -338,117 +450,7 @@ module scenes {
             }
         }
 
-        private addMaze(): void {
-            //Outer Walls
-            this.wallGeometry = new BoxGeometry(32, 5, 1);
-            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
-            this.backWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.backWall.position.set(0, 3, -16);
-            this.backWall.receiveShadow = true;
-            this.backWall.name = "wall";
-            scene.add(this.backWall);
-
-            this.wallGeometry = new BoxGeometry(32, 5, 1);
-            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
-            this.frontWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.frontWall.position.set(0, 3, 16);
-            this.frontWall.receiveShadow = true;
-            this.frontWall.name = "wall";
-            scene.add(this.frontWall);
-
-            this.wallGeometry = new BoxGeometry(1, 5, 32);
-            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
-            this.rightWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.rightWall.position.set(16, 3, 0);
-            this.rightWall.receiveShadow = true;
-            this.rightWall.name = "wall";
-            scene.add(this.rightWall);
-
-            this.wallGeometry = new BoxGeometry(1, 5, 32);
-            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
-            this.leftWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.leftWall.position.set(-16, 3, 0);
-            this.leftWall.receiveShadow = true;
-            this.leftWall.name = "wall";
-            scene.add(this.leftWall);
-
-            //Actual Maze
-            this.wallGeometry = new BoxGeometry(16, 5, 1);
-            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
-
-            this.wall1 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.wall1.position.set(8, 3, -12);
-            this.wall1.receiveShadow = true;
-            this.wall1.name = "wall";
-            scene.add(this.wall1);
-
-            this.wall2 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.wall2.position.set(-8, 3, -8);
-            this.wall2.receiveShadow = true;
-            this.wall2.name = "wall";
-            scene.add(this.wall2);
-
-            this.wall3 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.wall3.position.set(8, 3, -4);
-            this.wall3.receiveShadow = true;
-            this.wall3.name = "wall";
-            scene.add(this.wall3);
-
-            this.wall4 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.wall4.position.set(-8, 3, 0);
-            this.wall4.receiveShadow = true;
-            this.wall4.name = "wall";
-            scene.add(this.wall4);
-
-            this.wall5 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
-            this.wall5.position.set(8, 3, 4);
-            this.wall5.receiveShadow = true;
-            this.wall5.name = "wall";
-            scene.add(this.wall5);
-
-            //"electric hazards"
-            this.hazardGeometry = new BoxGeometry(1, 2, 8);
-            this.hazardMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xffff00 }), 0, 0);
-
-            this.hazard1 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
-            this.hazard1.position.set(0.5, 1, -12);
-            this.hazard1.receiveShadow = true;
-            this.hazard1.name = "hazard";
-            scene.add(this.hazard1);
-
-            this.hazard2 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
-            this.hazard2.position.set(0.5, 1, -8);
-            this.hazard2.receiveShadow = true;
-            this.hazard2.name = "hazard";
-            scene.add(this.hazard2);
-
-            this.hazard3 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
-            this.hazard3.position.set(0.5, 1, -4);
-            this.hazard3.receiveShadow = true;
-            this.hazard3.name = "hazard";
-            scene.add(this.hazard3);
-
-            this.hazard4 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
-            this.hazard4.position.set(0.5, 1, 0);
-            this.hazard4.receiveShadow = true;
-            this.hazard4.name = "hazard";
-            scene.add(this.hazard4);
-
-            this.hazard5 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
-            this.hazard5.position.set(0.5, 1, 4);
-            this.hazard5.receiveShadow = true;
-            this.hazard5.name = "hazard";
-            scene.add(this.hazard4);
-
-            //End Goal
-            this.goalGeometry = new BoxGeometry(4, 1, 4);
-            this.goalMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff0000 }), 0, 0);
-            this.goal = new Physijs.BoxMesh(this.goalGeometry, this.goalMaterial, 0);
-            this.goal.position.set(15, 1, -15);
-            this.goal.name = "goal";
-            scene.add(this.goal);
-
-        }
+        
 
         // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++
 
@@ -511,14 +513,15 @@ module scenes {
 
             // Ground Object
             this.addGround();
+            
+            //Add actual maze to level
+            this.addMaze();
 
             // Add player controller
             this.addPlayer();
 
             // Add death plane to the scene
             this.addDeathPlane();
-
-            this.addMaze();
 
             // Collision Check
 
