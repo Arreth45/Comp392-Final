@@ -42,7 +42,6 @@ var scenes;
             this.blocker.style.display = "block";
             //setup canvas
             this._setupCanvas();
-            this.coinCount = 10;
             this.prevTime = 0;
             this.stage = new createjs.Stage(canvas);
             this.velocity = new Vector3(0, 0, 0);
@@ -161,41 +160,6 @@ var scenes;
             this.add(this.deathPlane);
         };
         /**
-         * This method adds a coin to the scene
-         *
-         * @method addCoinMesh
-         * @return void
-         */
-        Play.prototype.addCoinMesh = function () {
-            var self = this;
-            this.coins = new Array(); // Instantiate a convex mesh array
-            var coinLoader = new THREE.JSONLoader().load("../../Assets/imported/coin.json", function (geometry) {
-                var phongMaterial = new PhongMaterial({ color: 0xE7AB32 });
-                phongMaterial.emissive = new THREE.Color(0xE7AB32);
-                var coinMaterial = Physijs.createMaterial((phongMaterial), 0.4, 0.6);
-                for (var count = 0; count < self.coinCount; count++) {
-                    self.coins[count] = new Physijs.ConvexMesh(geometry, coinMaterial);
-                    self.coins[count].receiveShadow = true;
-                    self.coins[count].castShadow = true;
-                    self.coins[count].name = "Coin";
-                    self.setCoinPosition(self.coins[count]);
-                    console.log("Added Coin Mesh to Scene, at position: " + self.coins[count].position);
-                }
-            });
-        };
-        /**
-         * This method randomly sets the coin object's position
-         *
-         * @method setCoinPosition
-         * @return void
-         */
-        Play.prototype.setCoinPosition = function (coin) {
-            var randomPointX = Math.floor(Math.random() * 20) - 10;
-            var randomPointZ = Math.floor(Math.random() * 20) - 10;
-            coin.position.set(randomPointX, 10, randomPointZ);
-            this.add(coin);
-        };
-        /**
          * Event Handler method for any pointerLockChange events
          *
          * @method pointerLockChange
@@ -281,6 +245,100 @@ var scenes;
                 this.player.setAngularVelocity(new Vector3(0, 0, 0));
             }
         };
+        Play.prototype.addMaze = function () {
+            //Outer Walls
+            this.wallGeometry = new BoxGeometry(32, 5, 1);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.backWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.backWall.position.set(0, 3, -16);
+            this.backWall.receiveShadow = true;
+            this.backWall.name = "wall";
+            scene.add(this.backWall);
+            this.wallGeometry = new BoxGeometry(32, 5, 1);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.frontWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.frontWall.position.set(0, 3, 16);
+            this.frontWall.receiveShadow = true;
+            this.frontWall.name = "wall";
+            scene.add(this.frontWall);
+            this.wallGeometry = new BoxGeometry(1, 5, 32);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.rightWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.rightWall.position.set(16, 3, 0);
+            this.rightWall.receiveShadow = true;
+            this.rightWall.name = "wall";
+            scene.add(this.rightWall);
+            this.wallGeometry = new BoxGeometry(1, 5, 32);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.leftWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.leftWall.position.set(-16, 3, 0);
+            this.leftWall.receiveShadow = true;
+            this.leftWall.name = "wall";
+            scene.add(this.leftWall);
+            //Actual Maze
+            this.wallGeometry = new BoxGeometry(16, 5, 1);
+            this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
+            this.wall1 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall1.position.set(8, 3, -12);
+            this.wall1.receiveShadow = true;
+            this.wall1.name = "wall";
+            scene.add(this.wall1);
+            this.wall2 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall2.position.set(-8, 3, -8);
+            this.wall2.receiveShadow = true;
+            this.wall2.name = "wall";
+            scene.add(this.wall2);
+            this.wall3 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall3.position.set(8, 3, -4);
+            this.wall3.receiveShadow = true;
+            this.wall3.name = "wall";
+            scene.add(this.wall3);
+            this.wall4 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall4.position.set(-8, 3, 0);
+            this.wall4.receiveShadow = true;
+            this.wall4.name = "wall";
+            scene.add(this.wall4);
+            this.wall5 = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
+            this.wall5.position.set(8, 3, 4);
+            this.wall5.receiveShadow = true;
+            this.wall5.name = "wall";
+            scene.add(this.wall5);
+            //"electric hazards"
+            this.hazardGeometry = new BoxGeometry(1, 2, 8);
+            this.hazardMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xffff00 }), 0, 0);
+            this.hazard1 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard1.position.set(0.5, 1, -12);
+            this.hazard1.receiveShadow = true;
+            this.hazard1.name = "hazard";
+            scene.add(this.hazard1);
+            this.hazard2 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard2.position.set(0.5, 1, -8);
+            this.hazard2.receiveShadow = true;
+            this.hazard2.name = "hazard";
+            scene.add(this.hazard2);
+            this.hazard3 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard3.position.set(0.5, 1, -4);
+            this.hazard3.receiveShadow = true;
+            this.hazard3.name = "hazard";
+            scene.add(this.hazard3);
+            this.hazard4 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard4.position.set(0.5, 1, 0);
+            this.hazard4.receiveShadow = true;
+            this.hazard4.name = "hazard";
+            scene.add(this.hazard4);
+            this.hazard5 = new Physijs.BoxMesh(this.hazardGeometry, this.hazardMaterial, 0);
+            this.hazard5.position.set(0.5, 1, 4);
+            this.hazard5.receiveShadow = true;
+            this.hazard5.name = "hazard";
+            scene.add(this.hazard4);
+            //End Goal
+            this.goalGeometry = new BoxGeometry(4, 1, 4);
+            this.goalMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff0000 }), 0, 0);
+            this.goal = new Physijs.BoxMesh(this.goalGeometry, this.goalMaterial, 0);
+            this.goal.position.set(15, 1, -15);
+            this.goal.name = "goal";
+            scene.add(this.goal);
+        };
         // PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++++++
         /**
          * The start method is the main method for the scene class
@@ -330,22 +388,14 @@ var scenes;
             this.addGround();
             // Add player controller
             this.addPlayer();
-            // Add custom coin imported from Blender
-            this.addCoinMesh();
             // Add death plane to the scene
             this.addDeathPlane();
+            this.addMaze();
             // Collision Check
             this.player.addEventListener('collision', function (eventObject) {
                 if (eventObject.name === "Ground") {
                     this.isGrounded = true;
                     createjs.Sound.play("land");
-                }
-                if (eventObject.name === "Coin") {
-                    createjs.Sound.play("coin");
-                    this.remove(eventObject);
-                    this.setCoinPosition(eventObject);
-                    this.scoreValue += 100;
-                    this.scoreLabel.text = "SCORE: " + this.scoreValue;
                 }
                 if (eventObject.name === "DeathPlane") {
                     createjs.Sound.play("hit");
@@ -354,6 +404,16 @@ var scenes;
                     this.remove(this.player);
                     this.player.position.set(0, 30, 10);
                     this.add(this.player);
+                }
+                if (eventObject.name === "hazard") {
+                    this.livesValue -= 1;
+                    this.liveslabel.text = "Lives: " + this.livesValue;
+                }
+                if (eventObject.name === "goal") {
+                    console.log("Hit goal");
+                    scene.remove(this.player);
+                    this.player.position.set(0, 5, 10);
+                    scene.add(this.player);
                 }
             }.bind(this));
             // create parent-child relationship with camera and player
@@ -379,10 +439,6 @@ var scenes;
          * @returns void
          */
         Play.prototype.update = function () {
-            this.coins.forEach(function (coin) {
-                coin.setAngularFactor(new Vector3(0, 0, 0));
-                coin.setAngularVelocity(new Vector3(0, 1, 0));
-            });
             this.checkControls();
             this.stage.update();
         };
@@ -401,8 +457,7 @@ var scenes;
             this.stage.update();
         };
         return Play;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Play = Play;
 })(scenes || (scenes = {}));
-
 //# sourceMappingURL=play.js.map

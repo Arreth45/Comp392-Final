@@ -57,7 +57,7 @@ var scenes;
          * @return void
          */
         Menu.prototype.start = function () {
-            this._nameLabel = new createjs.Text("Add Name Later", "80px Consolas", "#000000");
+            this._nameLabel = new createjs.Text("Maze Platformer", "80px Consolas", "#000000");
             this._nameLabel.regX = this._nameLabel.getMeasuredWidth() * 0.5;
             this._nameLabel.regY = this._nameLabel.getMeasuredHeight() * 0.5;
             this._nameLabel.x = config.Screen.WIDTH * 0.5;
@@ -102,8 +102,7 @@ var scenes;
             this._stage.update();
         };
         return Menu;
-    }(scenes.Scene));
+    })(scenes.Scene);
     scenes.Menu = Menu;
 })(scenes || (scenes = {}));
-
 //# sourceMappingURL=menu.js.map
