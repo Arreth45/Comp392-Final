@@ -37,6 +37,8 @@ var renderer;
 var camera;
 var play;
 var menu;
+var instructions;
+var level2;
 var stats;
 var canvas;
 var assets;
@@ -45,7 +47,10 @@ var manifest = [
     { id: "hit", src: "../../Assets/audio/hit.wav" },
     { id: "coin", src: "../../Assets/audio/coin.mp3" },
     { id: "jump", src: "../../Assets/audio/Jump.wav" },
-    { id: "playButton", src: "../../Assets/images/play.png" }
+    { id: "playButton", src: "../../Assets/images/start.png" },
+    { id: "instructionButton", src: "../../Assets/images/instructions.png" },
+    { id: "exitButton", src: "../../Assets/images/exit.png" },
+    { id: "backButton", src: "../../Assets/images/back.png" }
 ];
 function preload() {
     assets = new createjs.LoadQueue();
@@ -126,11 +131,17 @@ function changeScene() {
             scene = menu;
             console.log("Starting MENU Scene");
             break;
+        case config.Scene.INSTRUCTIONS:
+            // show the Instructions scene  
+            instructions = new scenes.Instructions();
+            scene = instructions;
+            console.log("Starting INSTRUCTIONS Scene");
+            break;
         case config.Scene.PLAY:
             // show the PLAY scene
             play = new scenes.Play();
             scene = play;
-            console.log("Starting PLAY Scene");
+            console.log("Starting Level 1 Scene");
             break;
         case config.Scene.OVER:
             // show the game OVER scene
@@ -139,6 +150,11 @@ function changeScene() {
             scene = over;
             console.log("Starting OVER Scene");
             */
+            break;
+        case config.Scene.LEVEL2:
+            level2 = new scenes.Level2();
+            scene = level2;
+            console.log("Starting Level 2 Scene");
             break;
     }
 }

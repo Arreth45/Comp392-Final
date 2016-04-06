@@ -169,7 +169,7 @@ var scenes;
             this.backWall.position.set(0, 3, -16);
             this.backWall.receiveShadow = true;
             this.backWall.name = "wall";
-            scene.add(this.backWall);
+            this.add(this.backWall);
             this.wallGeometry = new BoxGeometry(32, 5, 1);
             this.wallMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff00ff }), 0, 0);
             this.frontWall = new Physijs.BoxMesh(this.wallGeometry, this.wallMaterial, 0);
@@ -251,7 +251,7 @@ var scenes;
             this.goalGeometry = new BoxGeometry(4, 1, 4);
             this.goalMaterial = Physijs.createMaterial(new LambertMaterial({ color: 0xff0000 }), 0, 0);
             this.goal = new Physijs.BoxMesh(this.goalGeometry, this.goalMaterial, 0);
-            this.goal.position.set(15, 1, -15);
+            this.goal.position.set(15, 1, -14);
             this.goal.name = "goal";
             this.add(this.goal);
         };
@@ -317,7 +317,7 @@ var scenes;
                     }
                     if (this.keyboardControls.jump) {
                         this.velocity.y += 4000.0 * delta;
-                        if (this.player.position.y > 4) {
+                        if (this.player.position.y > 6) {
                             this.isGrounded = false;
                             createjs.Sound.play("jump");
                         }
@@ -409,14 +409,13 @@ var scenes;
                     this.add(this.player);
                 }
                 if (eventObject.name === "hazard") {
-                    this.livesValue -= 1;
-                    this.liveslabel.text = "Lives: " + this.livesValue;
+                    this.livesValue--;
+                    this.livesLabel.text = "Lives: " + this.livesValue;
                 }
                 if (eventObject.name === "goal") {
                     console.log("Hit goal");
-                    scene.remove(this.player);
-                    this.player.position.set(0, 5, 10);
-                    scene.add(this.player);
+                    currentScene = config.Scene.LEVEL2;
+                    changeScene();
                 }
             }.bind(this));
             // create parent-child relationship with camera and player

@@ -11,12 +11,10 @@ module scenes {
         *
         * @param _blocker {HTMLElement}
         */
-    export class Menu extends scenes.Scene {
+    export class Over extends scenes.Scene {
         private _stage: createjs.Stage;
         private _nameLabel: createjs.Text;
-        private _playButton: createjs.Bitmap;
-        private _instructionsButton: createjs.Bitmap;
-        private _exitButton: createjs.Bitmap;
+        private _restartButton: createjs.Bitmap;
         private _blocker: HTMLElement;
 
         /**
@@ -65,7 +63,7 @@ module scenes {
          */
         public start(): void {
             this._nameLabel = new createjs.Text(
-                "Maze Platformer",
+                "Game Over",
                 "80px Consolas",
                 "#000000");
             this._nameLabel.regX = this._nameLabel.getMeasuredWidth() * 0.5;
@@ -74,62 +72,25 @@ module scenes {
             this._nameLabel.y = config.Screen.HEIGHT * 0.3;
             this._stage.addChild(this._nameLabel);
 
-            this._playButton = new createjs.Bitmap(assets.getResult("playButton"));
-            this._playButton.regX = this._playButton.getBounds().width * 0.5;
-            this._playButton.regY = this._playButton.getBounds().height * 0.5;
-            this._playButton.x = config.Screen.WIDTH * 0.5 - 200 ;
-            this._playButton.y = config.Screen.HEIGHT * 0.3 + 200;
-            this._stage.addChild(this._playButton);
+            this._restartButton = new createjs.Bitmap(assets.getResult("restartButton"));
+            this._restartButton.regX = this._restartButton.getBounds().width * 0.5;
+            this._restartButton.regY = this._restartButton.getBounds().height * 0.5;
+            this._restartButton.x = config.Screen.WIDTH * 0.5;
+            this._restartButton.y = config.Screen.HEIGHT * 0.3 + 200;
+            this._stage.addChild(this._restartButton);
 
-            this._instructionsButton = new createjs.Bitmap(assets.getResult("instructionButton"));
-            this._instructionsButton.regX = this._instructionsButton.getBounds().width * 0.5;
-            this._instructionsButton.regY = this._instructionsButton.getBounds().height * 0.5;
-            this._instructionsButton.x = config.Screen.WIDTH * 0.5;
-            this._instructionsButton.y = config.Screen.HEIGHT * 0.3 + 200;
-            this._stage.addChild(this._instructionsButton);
-            
-            this._exitButton = new createjs.Bitmap(assets.getResult("exitButton"));
-            this._exitButton.regX = this._exitButton.getBounds().width * 0.5;
-            this._exitButton.regY = this._exitButton.getBounds().height * 0.5;
-            this._exitButton.x = config.Screen.WIDTH * 0.5 + 200;
-            this._exitButton.y = config.Screen.HEIGHT * 0.3 + 200;
-            this._stage.addChild(this._exitButton);
-              
-            this._playButton.on("mouseover", (event: createjs.MouseEvent) => {
+            this._restartButton.on("mouseover", (event: createjs.MouseEvent) => {
                 event.target.alpha = 0.7;
             });
 
-            this._playButton.on("mouseout", (event: createjs.MouseEvent) => {
+            this._restartButton.on("mouseout", (event: createjs.MouseEvent) => {
                 event.target.alpha = 1.0;
             });
 
-            this._playButton.on("click", (event: createjs.MouseEvent) => {
+            this._restartButton.on("click", (event: createjs.MouseEvent) => {
                 currentScene = config.Scene.PLAY;
                 changeScene();
             });
-            
-            this._instructionsButton.on("mouseover", (event: createjs.MouseEvent) => {
-                event.target.alpha = 0.7;
-            });
-            
-            this._instructionsButton.on("mouseout", (event: createjs.MouseEvent) => {
-                event.target.alpha = 1.0;
-            });
-            
-            this._instructionsButton.on("click", (event: createjs.MouseEvent) => {
-                currentScene = config.Scene.INSTRUCTIONS;
-                changeScene();
-            });
-            
-            this._exitButton.on("mouseover", (event: createjs.MouseEvent) => {
-                event.target.alpha = 0.7;
-            });
-            
-            this._exitButton.on("mouseout", (event: createjs.MouseEvent) => {
-                event.target.alpha = 1.0;
-            });
-
-
 
         }
 
